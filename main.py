@@ -6,7 +6,8 @@ import random
 
 root = Tk()
 root.configure(bg="#252525")
-root.geometry('600x250')
+root.geometry('550x250')
+root.resizable(0,0)
 root.title("musicplayer")
 defined_font = font.Font(family='Helvetica')
 
@@ -22,6 +23,7 @@ class MusicPlayer:
     songg = songname[y]
 
     def playfile(songgpath,songgname):
+        MusicPlayer.resetui()
         try:
             print(f'currently playing..\n{songgname}')
             mixer.music.load(songgpath)
@@ -43,13 +45,11 @@ class MusicPlayer:
 
     def resume():
         mixer.music.unpause()
-        bt = Button(frm,text="pause",command=MusicPlayer.pause,width=8,bg="#b0a9ac",fg="#050204",activebackground="#52a9b3")
-        bt["font"] = defined_font
-        bt.grid(row=1,column=1)
-        pausedtext.config(text="")
-    
+        MusicPlayer.resetui()
+
     def stopp():
         mixer.music.stop()
+        MusicPlayer.resetui()
 
     def next():
         MusicPlayer.sng += 1
@@ -61,6 +61,7 @@ class MusicPlayer:
         songpath = MusicPlayer.x
         songname = MusicPlayer.songg
         MusicPlayer.playfile(songpath,songname)
+        MusicPlayer.resetui()
 
     def prev():
         MusicPlayer.sng -= 1
@@ -72,12 +73,21 @@ class MusicPlayer:
         songpath = MusicPlayer.x
         songname = MusicPlayer.songg
         MusicPlayer.playfile(songpath,songname)
+        MusicPlayer.resetui()
 
     def randomsong():
         songpath = random.choice(MusicPlayer.songpath)
         songname2 = MusicPlayer.songpath.index(songpath)
         songname = MusicPlayer.songname[songname2]
+        MusicPlayer.sng = songname2
         MusicPlayer.playfile(songpath,songname)
+        MusicPlayer.resetui()
+
+    def resetui():
+        bt = Button(frm,text="pause",command=MusicPlayer.pause,width=8,bg="#b0a9ac",fg="#050204",activebackground="#52a9b3")
+        bt["font"] = defined_font
+        bt.grid(row=1,column=1)
+        pausedtext.config(text="")    
 
 my_menu = Menu(root,bg="#252525")
 my_menu.add_cascade(label=f'SONGS  ({len(MusicPlayer.songname)})',font=defined_font,)
