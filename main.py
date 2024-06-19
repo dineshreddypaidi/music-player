@@ -1,15 +1,14 @@
-from songs import Songs
-
-if Songs.is_empty():
-    print("no playable music found")
-    exit()
-    
-    
+from songs import Songs    
 from tkinter import *
 from pygame import mixer
 import tkinter.font as font
 import random
 
+
+if Songs.is_empty():
+    print("no playable music found")
+    exit()
+    
 root = Tk()
 root.configure(bg="#252525")
 root.geometry('550x250')
