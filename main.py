@@ -1,4 +1,10 @@
 from songs import Songs
+
+if Songs.is_empty():
+    print("no playable music found")
+    exit()
+    
+    
 from tkinter import *
 from pygame import mixer
 import tkinter.font as font
@@ -16,7 +22,7 @@ mixer.init()
 class MusicPlayer:
     songpath = Songs.songpath
     songname = Songs.songname
-
+    
     sng = 0
     x = songpath[sng]
     y = songpath.index(x)
@@ -87,7 +93,7 @@ class MusicPlayer:
         bt = Button(frm,text="pause",command=MusicPlayer.pause,width=8,bg="#b0a9ac",fg="#050204",activebackground="#52a9b3")
         bt["font"] = defined_font
         bt.grid(row=1,column=1)
-        pausedtext.config(text="")    
+        pausedtext.config(text="")
 
 my_menu = Menu(root,bg="#252525")
 my_menu.add_cascade(label=f'SONGS  ({len(MusicPlayer.songname)})',font=defined_font,)
